@@ -49,7 +49,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-<!-- Ferramenta para ler arquivos CSV -->
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
