@@ -24,7 +24,6 @@ public class SecurityConfig {
 
     private final SecurityFilter securityFilter;
 
-   
     @Value("${app.cors.allowed-origins:http://localhost:5173}")
     private String allowedOrigins;
 
@@ -45,7 +44,7 @@ public class SecurityConfig {
 
                 .dispatcherTypeMatchers(jakarta.servlet.DispatcherType.ERROR).permitAll()
 
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/**", "/api/health").permitAll()
 
                 .anyRequest().authenticated()
             )
