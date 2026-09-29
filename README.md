@@ -87,4 +87,4 @@ Distribuído sob a licença MIT.
 
 ## Autor
 
-[Autor](Gus)) — [Linkedin](https://www.linkedin.com/in/gustavo-bizarro-soares)
+[Autor](https://github.com/sxnozz) — [Linkedin](https://www.linkedin.com/in/gustavo-bizarro-soares)
