@@ -87,4 +87,4 @@ Distribuído sob a licença MIT.
 
 ## Autor
 
-[Gus] — [www.linkedin.com/in/gustavo-bizarro-soares] 
+[Autor](Gus)) — [Linkedin](https://www.linkedin.com/in/gustavo-bizarro-soares)
