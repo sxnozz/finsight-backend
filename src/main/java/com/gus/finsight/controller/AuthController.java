@@ -2,10 +2,12 @@ package com.gus.finsight.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.gus.finsight.dto.UserLoginRequest;
 import com.gus.finsight.dto.UserRegisterRequest;
@@ -18,6 +20,7 @@ import com.gus.finsight.service.EmailService;
 import com.gus.finsight.service.RateLimiterService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 import java.security.SecureRandom;
 import java.util.Map;
@@ -46,8 +49,14 @@ public class AuthController {
         this.rateLimiter = rateLimiter;
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleValidationError(MethodArgumentNotValidException ex) {
+        String message = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
+        return ResponseEntity.badRequest().body(Map.of("error", message));
+    }
+
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRegisterRequest request, HttpServletRequest httpRequest) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterRequest request, HttpServletRequest httpRequest) {
 
         if (!rateLimiter.isAllowed("register:" + httpRequest.getRemoteAddr(), 5, 3600)) {
             return ResponseEntity.status(429).body(Map.of("error", "Muitas tentativas de cadastro. Tente novamente mais tarde."));
