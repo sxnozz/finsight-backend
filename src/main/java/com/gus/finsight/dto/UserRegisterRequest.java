@@ -1,5 +1,6 @@
 package com.gus.finsight.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -11,6 +12,8 @@ public class UserRegisterRequest {
     @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s'-]+$", message = "Nome não pode conter números ou símbolos")
     private String name;
 
+    @NotBlank(message = "E-mail é obrigatório")
+    @Email(message = "E-mail inválido")
     private String email;
 
     private String password;

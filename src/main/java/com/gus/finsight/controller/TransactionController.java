@@ -54,7 +54,6 @@ public class TransactionController {
             return ResponseEntity.status(403).body(Map.of("insight", "A Inteligência Artificial é exclusiva para contas cadastradas. Crie sua conta gratuita e valide seu e-mail para testar este recurso!"));
         }
 
-        
         int reserved = userRepository.decrementAiTokens(dbUser.getId());
         if (reserved == 0) {
             return ResponseEntity.status(403).body(Map.of("insight", "Você não tem tokens de IA suficientes."));
@@ -130,7 +129,6 @@ public class TransactionController {
             return ResponseEntity.ok(Map.of("insight", insight));
 
         } finally {
-           
             if (!tokenConsumed) {
                 userRepository.incrementAiTokens(dbUser.getId());
             }
@@ -210,7 +208,12 @@ public class TransactionController {
         }
 
         String newCategory = body.get("category");
-        TransactionResponse updated = transactionService.updateTransactionCategory(id, newCategory);
+
+        if (newCategory == null || newCategory.isBlank() || newCategory.length() > 50) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Categoria inválida."));
+        }
+
+        TransactionResponse updated = transactionService.updateTransactionCategory(id, newCategory.trim());
         return ResponseEntity.ok(updated);
     }
 
